@@ -18,7 +18,6 @@ public class CheckoutService {
     private final OrderRepository orderRepository;
     private final AuthService authService;
     private final CartService cartService;
-    private final PaymentGateway session;
     private final PaymentGateway paymentGateway;
 
     @Transactional
@@ -52,11 +51,9 @@ public class CheckoutService {
         paymentGateway
                 .parseWebhookRequest(request)
                 .ifPresent(paymentResult -> {
-
                     var order = orderRepository.findById(paymentResult.getOrderId()).orElseThrow();
                     order.setStatus(paymentResult.getPaymentStatus());
                     orderRepository.save(order);
                 });
-
     }
 }

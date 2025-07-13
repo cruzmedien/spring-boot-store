@@ -39,10 +39,9 @@ public class CheckoutController {
                 .body(new ErrorDto("Error creating a checkout session"));
     }
 
+
     @ExceptionHandler({CartNotFoundException.class, CartEmptyException.class})
     public ResponseEntity<ErrorDto> handleException(Exception ex) {
-        return ResponseEntity.badRequest().body(
-                new ErrorDto(ex.getMessage())
-        );
+        return ResponseEntity.badRequest().body(new ErrorDto(ex.getMessage()));
     }
 }
